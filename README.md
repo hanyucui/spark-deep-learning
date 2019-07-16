@@ -1,5 +1,6 @@
 Deep Learning Pipelines for Apache Spark
 ============================================================
+
 [![Build Status][pkg-build-badge]][pkg-build-link] [![Coverage][pkg-cov-badge]][pkg-cov-link]
 
   [pkg-build-badge]: https://travis-ci.org/databricks/spark-deep-learning.svg?branch=master
@@ -190,7 +191,7 @@ estimator = KerasImageFileEstimator( inputCol="uri",
                                      kerasOptimizer='adam',
                                      kerasLoss='categorical_crossentropy',
                                      modelFile='/tmp/model-full-tmp.h5' # local file path for model
-                                   ) 
+                                   )
 ```
 We can use it for hyperparameter tuning by doing a grid search using `CrossValidataor`.
 
@@ -216,7 +217,7 @@ cvModel = cv.fit(train_df)
 Spark DataFrames are a natural construct for applying deep learning models to a large-scale dataset. Deep Learning Pipelines provides a set of Spark MLlib Transformers for applying TensorFlow Graphs and TensorFlow-backed Keras Models at scale. The Transformers, backed by the Tensorframes library, efficiently handle the distribution of models and data to Spark workers.
 
 #### Applying deep learning models at scale to images
-Deep Learning Pipelines provides several ways to apply models to images at scale: 
+Deep Learning Pipelines provides several ways to apply models to images at scale:
 * Popular images models can be applied out of the box, without requiring any TensorFlow or Keras code
 * TensorFlow graphs that work on images
 * Keras models that work on images
@@ -264,9 +265,9 @@ processed_image_df = transformer.transform(image_df)
 ```
 
 ##### For Keras users
-For applying Keras models in a distributed manner using Spark, [`KerasImageFileTransformer`](link_here) works on TensorFlow-backed Keras models. It 
+For applying Keras models in a distributed manner using Spark, [`KerasImageFileTransformer`](link_here) works on TensorFlow-backed Keras models. It
 * Internally creates a DataFrame containing a column of images by applying the user-specified image loading and processing function to the input DataFrame containing a column of image URIs
-* Loads a Keras model from the given model file path 
+* Loads a Keras model from the given model file path
 * Applies the model to the image DataFrame
 
 The difference in the API from `TFImageTransformer` above stems from the fact that usual Keras workflows have very specific ways to load and resize images that are not part of the TensorFlow Graph.
@@ -423,7 +424,7 @@ final_df = transformer.transform(input_df)
 
 ### Deploying models as SQL functions
 
-One way to productionize a model is to deploy it as a Spark SQL User Defined Function, which allows anyone who knows SQL to use it. Deep Learning Pipelines provides mechanisms to take a deep learning model and *register* a Spark SQL User Defined Function (UDF). In particular, Deep Learning Pipelines 0.2.0 adds support for creating SQL UDFs from Keras models that work on image data. 
+One way to productionize a model is to deploy it as a Spark SQL User Defined Function, which allows anyone who knows SQL to use it. Deep Learning Pipelines provides mechanisms to take a deep learning model and *register* a Spark SQL User Defined Function (UDF). In particular, Deep Learning Pipelines 0.2.0 adds support for creating SQL UDFs from Keras models that work on image data.
 
 The resulting UDF takes a column (formatted as a image struct "SpImage") and produces the output of the given Keras model; e.g. for Inception V3, it produces a real valued score vector over the ImageNet object categories.
 
